@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi colección PRO MAX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link href="noSimple.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="brand">Mi colección PRO MAX</div>
+        <nav>
+            <a href="/simple/indexSimple.html">Página simple</a>
+            <a href="/noSimple/indexNo.html">Página no simple</a>
+        </nav>
+        <div class="toolbar-top">
+            <button type="button" id="btn-theme" class="ghost">Tema: claro</button>
+            <button type="button" id="btn-shortcuts" class="ghost">Atajos (?)</button>
+            <button type="button" id="btn-random" class="ghost">Sorpréndeme</button>
+        </div>
+    </header>
+
+    <div id="tour" class="tour">
+        <strong>Bienvenido.</strong> Tienes 4 vistas, 6 filtros, 5 ordenamientos, edición, favoritos, notas, etiquetas,
+        estadísticas, importación, exportación, arrastrar y soltar, deshacer y 9 atajos de teclado.
+        <button type="button" id="tour-next" class="ghost">Siguiente consejo (1/12)</button>
+        <button type="button" id="tour-close" class="ghost">Cerrar</button>
+    </div>
+
+    <main>
+        <h1>Mis películas</h1>
+        <p class="intro">Centro de control cinematográfico: registra, puntúa, clasifica, etiqueta, filtra, ordena,
+            exporta y
+            analiza todo lo que ves.</p>
+
+        <section class="stats" id="stats" aria-label="Estadísticas"></section>
+
+        <section class="form-card" aria-label="Agregar película">
+            <form id="movie-form" autocomplete="off">
+                <div class="grid">
+                    <div><label for="f-title">Nombre *</label>
+                        <input id="f-title" required maxlength="100" placeholder="Ej. El viaje de Chihiro">
+                    </div>
+                    <div><label for="f-year">Año</label>
+                        <input id="f-year" type="number" min="1888" max="2100" placeholder="2001">
+                    </div>
+                    <div><label for="f-director">Director</label>
+                        <input id="f-director" maxlength="60" placeholder="Hayao Miyazaki">
+                    </div>
+                    <div><label for="f-genre">Género</label>
+                        <select id="f-genre"></select>
+                    </div>
+                    <div><label for="f-status">Estado</label>
+                        <select id="f-status">
+                            <option value="pendiente">Pendiente</option>
+                            <option value="viendo">Viéndola</option>
+                            <option value="vista">Vista</option>
+                            <option value="abandonada">Abandonada</option>
+                        </select>
+                    </div>
+                    <div><label for="f-rating">Calificación: <output id="f-rating-out">0</output>/10</label>
+                        <input id="f-rating" type="range" min="0" max="10" step="1" value="0">
+                    </div>
+                    <div><label for="f-date">Fecha en que la viste</label>
+                        <input id="f-date" type="date">
+                    </div>
+                    <div><label for="f-tags">Etiquetas (separadas por coma)</label>
+                        <input id="f-tags" placeholder="anime, familia, llorar">
+                    </div>
+                    <div class="wide"><label for="f-notes">Notas y reseña <small id="f-count">0/280</small></label>
+                        <textarea id="f-notes" maxlength="280" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <label class="check"><input type="checkbox" id="f-fav"> Marcar como favorita</label>
+                    <label class="check"><input type="checkbox" id="f-keep" checked> Mantener abierto el
+                        formulario</label>
+                    <button type="reset" class="ghost" id="btn-clear">Limpiar</button>
+                    <button type="submit" id="btn-save">Agregar película</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="controls" aria-label="Filtros">
+            <input id="q" type="search" placeholder="Buscar por nombre, director, etiqueta o nota (/)">
+            <select id="flt-status">
+                <option value="">Todos los estados</option>
+                <option>pendiente</option>
+                <option>viendo</option>
+                <option>vista</option>
+                <option>abandonada</option>
+            </select>
+            <select id="flt-genre"></select>
+            <select id="flt-rating">
+                <option value="0">Cualquier nota</option>
+                <option value="5">5 o más</option>
+                <option value="7">7 o más</option>
+                <option value="9">9 o más</option>
+            </select>
+            <label class="check"><input type="checkbox" id="flt-fav"> Solo favoritas</label>
+            <select id="sort">
+                <option value="manual">Orden manual</option>
+                <option value="titulo">Título A-Z</option>
+                <option value="anio">Año (reciente)</option>
+                <option value="nota">Calificación</option>
+                <option value="agregada">Última agregada</option>
+            </select>
+            <div class="views" role="group" aria-label="Vista">
+                <button type="button" data-view="lista" class="ghost on">Lista</button>
+                <button type="button" data-view="cuadricula" class="ghost">Cuadrícula</button>
+                <button type="button" data-view="compacta" class="ghost">Compacta</button>
+                <button type="button" data-view="tabla" class="ghost">Tabla</button>
+            </div>
+            <button type="button" id="btn-reset-filters" class="ghost">Restablecer filtros</button>
+        </section>
+
+        <section class="bulk" aria-label="Acciones masivas">
+            <label class="check"><input type="checkbox" id="sel-all"> Seleccionar todo</label>
+            <span id="sel-count">0 seleccionadas</span>
+            <button type="button" class="ghost" data-bulk="vista">Marcar vistas</button>
+            <button type="button" class="ghost" data-bulk="fav">Alternar favorita</button>
+            <button type="button" class="ghost danger" data-bulk="del">Eliminar selección</button>
+            <span class="spacer"></span>
+            <button type="button" class="ghost" id="btn-undo" disabled>Deshacer</button>
+            <button type="button" class="ghost" id="btn-export-json">Exportar JSON</button>
+            <button type="button" class="ghost" id="btn-export-csv">Exportar CSV</button>
+            <label class="ghost file">Importar JSON<input type="file" id="btn-import" accept=".json" hidden></label>
+            <button type="button" class="ghost danger" id="btn-wipe">Borrar todo</button>
+        </section>
+
+        <section aria-label="Lista de películas">
+            <div class="list-heading">
+                <h2>Películas registradas</h2>
+                <span id="count">0 películas</span>
+            </div>
+            <ul id="movie-list" class="lista"></ul>
+            <p id="empty-message" class="empty">No hay resultados con estos filtros.</p>
+            <div class="pager">
+                <button type="button" class="ghost" id="prev">Anterior</button>
+                <span id="page-info">Página 1 de 1</span>
+                <button type="button" class="ghost" id="next">Siguiente</button>
+                <select id="page-size" aria-label="Por página">
+                    <option>5</option>
+                    <option selected>10</option>
+                    <option>25</option>
+                </select>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="dlg-edit">
+        <form method="dialog" id="edit-form">
+            <h2>Editar película</h2>
+            <label for="e-title">Nombre</label><input id="e-title" required>
+            <label for="e-year">Año</label><input id="e-year" type="number">
+            <label for="e-notes">Notas</label><textarea id="e-notes" rows="3"></textarea>
+            <div class="form-actions">
+                <button value="cancel" class="ghost">Cancelar</button>
+                <button value="ok" id="e-ok">Guardar cambios</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-keys">
+        <h2>Atajos de teclado</h2>
+        <p><kbd>/</kbd> buscar · <kbd>n</kbd> nueva · <kbd>r</kbd> aleatoria · <kbd>t</kbd> tema · <kbd>g</kbd> cambiar
+            vista
+            · <kbd>u</kbd> deshacer · <kbd>a</kbd> seleccionar todo · <kbd>?</kbd> esta ayuda · <kbd>Esc</kbd> cerrar
+        </p>
+        <form method="dialog"><button>Entendido</button></form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <footer>Versión sobrecargada: lo opuesto a YAGNI (You Aren't Gonna Need It).</footer>
+    <script src="noSimple.js"></script>
+</body>
+
+</html>

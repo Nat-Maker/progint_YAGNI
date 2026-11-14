@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi colección</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link href="simple.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="brand">Mi colección</div>
+    <ul>
+      <li><a href="/simple/indexSimple.html"></a>Pagina simple</li>
+      <li><a href="/noSimple/indexNo.html"></a>Pagina simple</li>
+    </ul>
+  </header>
+
+  <main>
+    <h1>Mis películas</h1>
+    <p class="intro">Un espacio sencillo para llevar el registro de las películas que has visto.</p>
+
+    <section class="form-card" aria-label="Agregar película">
+      <form id="movie-form">
+        <label for="movie-input">Nombre de la película</label>
+        <div class="form-row">
+          <input id="movie-input" type="text" placeholder="Ej. El viaje de Chihiro" maxlength="100" required>
+          <button type="submit">Agregar película</button>
+        </div>
+      </form>
+    </section>
+
+    <section aria-label="Lista de películas">
+      <div class="list-heading">
+        <h2>Películas registradas</h2>
+        <span id="count">0 películas</span>
+      </div>
+      <ul id="movie-list"></ul>
+      <p id="empty-message" class="empty">Todavía no has agregado películas.</p>
+    </section>
+  </main>
+
+  <footer>Ejemplo simple basado en el concepto YAGNI (You Aren't Gonna Need It).</footer>
+
+  <script src="simple.js">
+  </script>
+</body>
+
+</html>
